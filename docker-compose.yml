@@ -1,0 +1,47 @@
+# Autor: Thiago Costa
+# Data: 25/05/2025
+# Disciplina: Sistemas Operacionais - UTFPR
+# Arquivo docker-compose que define os servicos da aplicacao
+
+services:
+  grafana:
+    image: grafana/grafana-oss:11.5.2-ubuntu
+    container_name: grafana
+    restart: always
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=${PASSWORD}
+      - GF_PLUGINS_PREINSTALL=alexanderzobnin-zabbix-app
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.grafana.rule=Host(`${GRAFANA_DOMAIN}`)"
+      - "traefik.http.routers.grafana.entrypoints=websecure"
+      - "traefik.http.routers.grafana.tls=true"
+      - "traefik.http.routers.grafana.tls.certresolver=le"
+      - "traefik.http.services.grafana.loadbalancer.server.port=3000"
+    volumes:
+      - ./grafana-storage:/var/lib/grafana
+    networks:
+      - rpg-net
+
+  backend:
+    build: .
+    container_name: os
+    restart: always
+    volumes:
+      - ./app:/app
+      - /proc:/host_proc:ro
+    environment:
+      - PROC_PATH=/host_proc
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.apidash.rule=Host(`${API_DOMAIN}`)"
+      - "traefik.http.routers.apidash.entrypoints=websecure"
+      - "traefik.http.routers.apidash.tls=true"
+      - "traefik.http.routers.apidash.tls.certresolver=le"
+      - "traefik.http.services.apidash.loadbalancer.server.port=8000"
+    networks:
+      - rpg-net
+
+networks:
+  rpg-net:
+    external: true

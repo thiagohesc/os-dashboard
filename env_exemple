@@ -1,0 +1,3 @@
+PASSWORD=senha
+GRAFANA_DOMAIN=cnamegrafana
+API_DOMAIN=cnameapi
