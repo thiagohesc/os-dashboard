@@ -3,20 +3,21 @@ Autor: Thiago Costa
 Data: 01/05/2025
 Disciplina: Sistemas Operacionais - UTFPR
 
-Classe desenvolvida para coletar e calcular informacoes sobre todos os
-processos em execucao no sistema usando:
-    /proc/[pid]/status: para obter nome do processo, UID, numero de threads e memoria (VmRSS)
-    /proc/[pid]/cmdline: para capturar os argumentos de execucao do processo
-    /proc/[pid]/stat: para calcular o tempo de CPU
-    /proc/stat: para calcular o tempo total da CPU
+Classe `ProcessInfo`
+Responsavel por coletar e calcular informacoes detalhadas sobre todos os processos em execucao
+no sistema operacional Linux, utilizando os arquivos em /proc.
 
-As informacoes extraidas:
-    PID, name, user e threads;
-    uso de memoria (VmRSS);
-    uso de CPU;
-    argumentos de execucao do processo
+Fontes de dados utilizadas:
+    - /proc/[pid]/status: Nome do processo, UID, numero de threads, uso de memoria (VmRSS)
+    - /proc/[pid]/cmdline: Argumentos de execucao do processo
+    - /proc/[pid]/stat: Tempo de CPU (user + system)
+    - /proc/[pid]/fd: Lista de arquivos abertos pelo processo
+    - /proc/stat: Tempo total de CPU do sistema
 
-Usei multithreading com a biblioteca `threading` para coletar as informacoes dos processos em paralelo
+Implementacao:
+    - Utiliza multithreading com semaforo (`threading.Semaphore`) para limitar concorrencia e acelerar coleta paralela
+    - Mede o uso de CPU com base em um intervalo de tempo (`delay`) entre leituras
+    - conversao de UID para nome de usuario via modulo `pwd`
 """
 
 import os
@@ -26,8 +27,8 @@ import pwd
 
 
 class ProcessInfo:
-    def __init__(self, proc="/proc"):
-        self.proc = proc
+    def __init__(self, proc_path="/proc"):
+        self.proc = proc_path
         self.processes = []
 
     def update(self, delay=1.0, max_threads=8):
@@ -46,6 +47,7 @@ class ProcessInfo:
                     "cpu_percent": f'{p["cpu_percent"]:.2f}',
                     "mem_rss_mb": round(p.get("mem_rss_mb", 0), 2),
                     "args": p["args"],
+                    "open_files": p.get("open_files", []),
                 }
                 for p in self.processes
             ]
@@ -116,6 +118,7 @@ class ProcessInfo:
             info.update(self._read_status(pid))
             mem_kb = info.get("mem", {}).get("rss", 0)
             info["mem_rss_mb"] = mem_kb / 1024
+            info["open_files"] = self._get_open_files(pid)
             return info
         except:
             return None
@@ -167,3 +170,17 @@ class ProcessInfo:
                 proc["cpu_percent"] = 0.0
 
         return processes
+
+    def _get_open_files(self, pid):
+        fd_path = f"{self.proc}/{pid}/fd"
+        open_files = []
+        try:
+            for fd in os.listdir(fd_path):
+                try:
+                    target = os.readlink(f"{fd_path}/{fd}")
+                    open_files.append(target)
+                except Exception:
+                    continue
+        except Exception:
+            pass
+        return open_files

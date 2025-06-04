@@ -30,6 +30,7 @@ services:
     volumes:
       - ./app:/app
       - /proc:/host_proc:ro
+      - /:/host_root:ro
     environment:
       - PROC_PATH=/host_proc
     labels:
