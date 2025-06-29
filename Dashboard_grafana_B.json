@@ -1,0 +1,1161 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 1,
+  "links": [],
+  "panels": [
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 17,
+      "panels": [
+        {
+          "datasource": {
+            "type": "marcusolsson-json-datasource",
+            "uid": "ceqfbf2oorfnkc"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "custom": {
+                "align": "auto",
+                "cellOptions": {
+                  "applyToRow": false,
+                  "mode": "gradient",
+                  "type": "color-background",
+                  "wrapText": false
+                },
+                "filterable": true,
+                "inspect": false
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 10,
+            "w": 24,
+            "x": 0,
+            "y": 1
+          },
+          "id": 10,
+          "options": {
+            "cellHeight": "lg",
+            "footer": {
+              "countRows": false,
+              "enablePagination": false,
+              "fields": "",
+              "reducer": [
+                "sum"
+              ],
+              "show": true
+            },
+            "showHeader": true,
+            "sortBy": [
+              {
+                "desc": true,
+                "displayName": "% CPU"
+              }
+            ]
+          },
+          "pluginVersion": "11.5.2",
+          "targets": [
+            {
+              "body": "",
+              "cacheDurationSeconds": 5,
+              "datasource": {
+                "type": "marcusolsson-json-datasource",
+                "uid": "ceqfbf2oorfnkc"
+              },
+              "fields": [
+                {
+                  "jsonPath": "$.entries[*].name",
+                  "language": "jsonpath",
+                  "name": "Name"
+                },
+                {
+                  "jsonPath": "$.entries[*].is_dir",
+                  "language": "jsonpath",
+                  "name": "Directory"
+                },
+                {
+                  "jsonPath": "$.entries[*].size_bytes",
+                  "language": "jsonpath",
+                  "name": "Size bytes"
+                },
+                {
+                  "jsonPath": "$.entries[*].permissions",
+                  "language": "jsonpath",
+                  "name": "Permissions"
+                },
+                {
+                  "jsonPath": "$.entries[*].modified_time",
+                  "language": "jsonpath",
+                  "name": "Modified time"
+                }
+              ],
+              "method": "GET",
+              "params": [
+                [
+                  "",
+                  ""
+                ]
+              ],
+              "queryParams": "",
+              "refId": "A",
+              "urlPath": "?path=$filesearch"
+            }
+          ],
+          "title": "Directory",
+          "transformations": [
+            {
+              "id": "extractFields",
+              "options": {
+                "delimiter": ",",
+                "format": "json"
+              }
+            }
+          ],
+          "type": "table"
+        }
+      ],
+      "title": "File Search",
+      "type": "row"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 1
+      },
+      "id": 14,
+      "panels": [
+        {
+          "datasource": {
+            "type": "marcusolsson-json-datasource",
+            "uid": "feqf7jzq9c3y8a"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "custom": {
+                "align": "auto",
+                "cellOptions": {
+                  "applyToRow": false,
+                  "mode": "gradient",
+                  "type": "color-background",
+                  "wrapText": false
+                },
+                "filterable": true,
+                "inspect": false
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 13,
+            "w": 24,
+            "x": 0,
+            "y": 78
+          },
+          "id": 11,
+          "options": {
+            "cellHeight": "lg",
+            "footer": {
+              "countRows": false,
+              "enablePagination": false,
+              "fields": "",
+              "reducer": [
+                "sum"
+              ],
+              "show": true
+            },
+            "showHeader": true,
+            "sortBy": [
+              {
+                "desc": true,
+                "displayName": "% CPU"
+              }
+            ]
+          },
+          "pluginVersion": "11.5.2",
+          "targets": [
+            {
+              "body": "",
+              "cacheDurationSeconds": 5,
+              "datasource": {
+                "type": "marcusolsson-json-datasource",
+                "uid": "feqf7jzq9c3y8a"
+              },
+              "fields": [
+                {
+                  "jsonPath": "$[\"data\"][*].mount_point",
+                  "language": "jsonpath",
+                  "name": "Mount point"
+                },
+                {
+                  "jsonPath": "$[\"data\"][*].device",
+                  "language": "jsonpath",
+                  "name": "Device"
+                },
+                {
+                  "jsonPath": "$[\"data\"][*].total_mb",
+                  "language": "jsonpath",
+                  "name": "Total MB"
+                },
+                {
+                  "jsonPath": "$[\"data\"][*].used_mb",
+                  "language": "jsonpath",
+                  "name": "Used MB"
+                },
+                {
+                  "jsonPath": "$[\"data\"][*].free_mb",
+                  "language": "jsonpath",
+                  "name": "Free MB"
+                },
+                {
+                  "jsonPath": "$[\"data\"][*].percent_used",
+                  "language": "jsonpath",
+                  "name": "% Used"
+                }
+              ],
+              "method": "GET",
+              "queryParams": "",
+              "refId": "A",
+              "urlPath": ""
+            }
+          ],
+          "title": "Storage Mounts",
+          "transformations": [
+            {
+              "id": "extractFields",
+              "options": {
+                "delimiter": ",",
+                "format": "json"
+              }
+            }
+          ],
+          "type": "table"
+        }
+      ],
+      "title": "Storage Mounts",
+      "type": "row"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 2
+      },
+      "id": 13,
+      "panels": [
+        {
+          "datasource": {
+            "type": "marcusolsson-json-datasource",
+            "uid": "deqf4rifxaq68d"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "purple",
+                    "value": null
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 3,
+            "w": 24,
+            "x": 0,
+            "y": 13
+          },
+          "id": 2,
+          "options": {
+            "colorMode": "background",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "vertical",
+            "percentChangeColorMode": "standard",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "/.*/",
+              "values": false
+            },
+            "showPercentChange": false,
+            "text": {},
+            "textMode": "value_and_name",
+            "wideLayout": false
+          },
+          "pluginVersion": "11.5.2",
+          "targets": [
+            {
+              "cacheDurationSeconds": 5,
+              "fields": [
+                {
+                  "jsonPath": "$.boot_time",
+                  "name": "Sistema iniciado em",
+                  "type": "string"
+                },
+                {
+                  "jsonPath": "$.total_processes",
+                  "language": "jsonpath",
+                  "name": "Processos desde o reinício"
+                },
+                {
+                  "jsonPath": "$.procs_running",
+                  "language": "jsonpath",
+                  "name": "Processos executando agora"
+                }
+              ],
+              "method": "GET",
+              "queryParams": "",
+              "refId": "A",
+              "urlPath": ""
+            }
+          ],
+          "title": "Sistema",
+          "type": "stat"
+        },
+        {
+          "datasource": {
+            "type": "marcusolsson-json-datasource",
+            "uid": "deqf4rifxaq68d"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "decimals": 2,
+              "fieldMinMax": false,
+              "mappings": [],
+              "thresholds": {
+                "mode": "percentage",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "#EAB839",
+                    "value": 50
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "percent"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 6,
+            "w": 14,
+            "x": 0,
+            "y": 72
+          },
+          "id": 1,
+          "options": {
+            "minVizHeight": 75,
+            "minVizWidth": 75,
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "last"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showThresholdLabels": false,
+            "showThresholdMarkers": true,
+            "sizing": "auto"
+          },
+          "pluginVersion": "11.5.2",
+          "targets": [
+            {
+              "cacheDurationSeconds": 5,
+              "datasource": {
+                "type": "marcusolsson-json-datasource",
+                "uid": "feqf7jzq9c3y8a"
+              },
+              "fields": [
+                {
+                  "jsonPath": "$.total_cpu_usage_percent",
+                  "name": "% Total"
+                },
+                {
+                  "jsonPath": "$.cores.cpu0.usage_percent",
+                  "language": "jsonpath",
+                  "name": "% Core0"
+                },
+                {
+                  "jsonPath": "$.cores.cpu1.usage_percent",
+                  "language": "jsonpath",
+                  "name": "% Core1"
+                },
+                {
+                  "jsonPath": "$.cores.cpu2.usage_percent",
+                  "language": "jsonpath",
+                  "name": "% Core2"
+                },
+                {
+                  "jsonPath": "$.cores.cpu3.usage_percent",
+                  "language": "jsonpath",
+                  "name": "% Core3"
+                }
+              ],
+              "method": "GET",
+              "queryParams": "",
+              "refId": "Core 0",
+              "urlPath": ""
+            }
+          ],
+          "title": "CPU",
+          "type": "gauge"
+        },
+        {
+          "datasource": {
+            "type": "marcusolsson-json-datasource",
+            "uid": "beqf4xayinqioc"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "decimals": 2,
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "blue",
+                    "value": null
+                  }
+                ]
+              },
+              "unit": "decmbytes"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 6,
+            "w": 6,
+            "x": 14,
+            "y": 72
+          },
+          "id": 5,
+          "options": {
+            "colorMode": "background",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "vertical",
+            "percentChangeColorMode": "standard",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "/.*/",
+              "values": false
+            },
+            "showPercentChange": false,
+            "textMode": "value_and_name",
+            "wideLayout": true
+          },
+          "pluginVersion": "11.5.2",
+          "targets": [
+            {
+              "cacheDurationSeconds": 5,
+              "datasource": {
+                "type": "marcusolsson-json-datasource",
+                "uid": "feqf7jzq9c3y8a"
+              },
+              "fields": [
+                {
+                  "jsonPath": "$.mem_total_mb",
+                  "name": "Total",
+                  "type": "number"
+                },
+                {
+                  "jsonPath": "$.mem_available_mb",
+                  "language": "jsonpath",
+                  "name": "Disponível"
+                },
+                {
+                  "jsonPath": "$.mem_used_mb",
+                  "language": "jsonpath",
+                  "name": "Usada"
+                }
+              ],
+              "method": "GET",
+              "queryParams": "",
+              "refId": "A",
+              "urlPath": ""
+            }
+          ],
+          "title": "Memória RAM",
+          "type": "stat"
+        },
+        {
+          "datasource": {
+            "type": "marcusolsson-json-datasource",
+            "uid": "beqf4xayinqioc"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "decimals": 2,
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "blue",
+                    "value": null
+                  }
+                ]
+              },
+              "unit": "decmbytes"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 6,
+            "w": 4,
+            "x": 20,
+            "y": 72
+          },
+          "id": 9,
+          "options": {
+            "colorMode": "background",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "vertical",
+            "percentChangeColorMode": "standard",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showPercentChange": false,
+            "textMode": "auto",
+            "wideLayout": true
+          },
+          "pluginVersion": "11.5.2",
+          "targets": [
+            {
+              "cacheDurationSeconds": 5,
+              "datasource": {
+                "type": "marcusolsson-json-datasource",
+                "uid": "beqf4xayinqioc"
+              },
+              "fields": [
+                {
+                  "jsonPath": "$.swap_total_mb",
+                  "name": "Total"
+                },
+                {
+                  "jsonPath": "$.swap_used_mb",
+                  "language": "jsonpath",
+                  "name": "Usada"
+                }
+              ],
+              "method": "GET",
+              "queryParams": "",
+              "refId": "A",
+              "urlPath": ""
+            }
+          ],
+          "title": "Memória Swap",
+          "type": "stat"
+        },
+        {
+          "datasource": {
+            "type": "marcusolsson-json-datasource",
+            "uid": "beqf4xayinqioc"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "mappings": [],
+              "min": 2,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "#EAB839",
+                    "value": 70
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "percent"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 6,
+            "w": 7,
+            "x": 0,
+            "y": 78
+          },
+          "id": 8,
+          "options": {
+            "minVizHeight": 75,
+            "minVizWidth": 75,
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showThresholdLabels": false,
+            "showThresholdMarkers": true,
+            "sizing": "auto"
+          },
+          "pluginVersion": "11.5.2",
+          "targets": [
+            {
+              "cacheDurationSeconds": 5,
+              "datasource": {
+                "type": "marcusolsson-json-datasource",
+                "uid": "beqf4xayinqioc"
+              },
+              "fields": [
+                {
+                  "jsonPath": "$.mem_used_percent",
+                  "name": "% RAM",
+                  "type": "number"
+                },
+                {
+                  "jsonPath": "$.swap_used_percent",
+                  "language": "jsonpath",
+                  "name": "% Swap"
+                }
+              ],
+              "method": "GET",
+              "queryParams": "",
+              "refId": "Memória RAM",
+              "urlPath": ""
+            }
+          ],
+          "title": "Memória",
+          "type": "gauge"
+        },
+        {
+          "datasource": {
+            "type": "marcusolsson-json-datasource",
+            "uid": "feqf7jzq9c3y8a"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "decimals": 2,
+              "fieldMinMax": false,
+              "mappings": [],
+              "thresholds": {
+                "mode": "percentage",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "#EAB839",
+                    "value": 50
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "percent"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 6,
+            "w": 7,
+            "x": 7,
+            "y": 78
+          },
+          "id": 19,
+          "options": {
+            "minVizHeight": 75,
+            "minVizWidth": 75,
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "last"
+              ],
+              "fields": "/^Percent Used$/",
+              "values": false
+            },
+            "showThresholdLabels": false,
+            "showThresholdMarkers": true,
+            "sizing": "auto"
+          },
+          "pluginVersion": "11.5.2",
+          "targets": [
+            {
+              "cacheDurationSeconds": 5,
+              "datasource": {
+                "type": "marcusolsson-json-datasource",
+                "uid": "feqf7jzq9c3y8a"
+              },
+              "fields": [
+                {
+                  "jsonPath": "$[\"data\"][*].percent_used",
+                  "language": "jsonpath",
+                  "name": "Percent Used",
+                  "type": "number"
+                },
+                {
+                  "jsonPath": "$[\"data\"][*].mount_point",
+                  "language": "jsonpath",
+                  "name": ""
+                }
+              ],
+              "method": "GET",
+              "queryParams": "",
+              "refId": "Percent Used",
+              "urlPath": ""
+            }
+          ],
+          "title": "Storage Percent Used",
+          "transformations": [
+            {
+              "id": "filterByValue",
+              "options": {
+                "filters": [
+                  {
+                    "config": {
+                      "id": "equal",
+                      "options": {
+                        "value": "/"
+                      }
+                    },
+                    "fieldName": "mount_point"
+                  }
+                ],
+                "match": "any",
+                "type": "include"
+              }
+            }
+          ],
+          "type": "gauge"
+        },
+        {
+          "datasource": {
+            "type": "marcusolsson-json-datasource",
+            "uid": "feqf7jzq9c3y8a"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "decimals": 2,
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "blue",
+                    "value": null
+                  }
+                ]
+              },
+              "unit": "decmbytes"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 6,
+            "w": 10,
+            "x": 14,
+            "y": 78
+          },
+          "id": 20,
+          "options": {
+            "colorMode": "background",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "vertical",
+            "percentChangeColorMode": "standard",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "/.*/",
+              "values": false
+            },
+            "showPercentChange": false,
+            "textMode": "value_and_name",
+            "wideLayout": true
+          },
+          "pluginVersion": "11.5.2",
+          "targets": [
+            {
+              "cacheDurationSeconds": 5,
+              "datasource": {
+                "type": "marcusolsson-json-datasource",
+                "uid": "feqf7jzq9c3y8a"
+              },
+              "fields": [
+                {
+                  "jsonPath": "$[\"data\"][*].mount_point",
+                  "name": "Mount Point"
+                },
+                {
+                  "jsonPath": "$[\"data\"][*].total_mb",
+                  "language": "jsonpath",
+                  "name": "Total"
+                },
+                {
+                  "jsonPath": "$[\"data\"][*].free_mb",
+                  "language": "jsonpath",
+                  "name": "Free"
+                },
+                {
+                  "jsonPath": "$[\"data\"][*].used_mb",
+                  "language": "jsonpath",
+                  "name": "Used"
+                }
+              ],
+              "method": "GET",
+              "queryParams": "",
+              "refId": "A",
+              "urlPath": ""
+            }
+          ],
+          "title": "Storage",
+          "transformations": [
+            {
+              "id": "filterByValue",
+              "options": {
+                "filters": [
+                  {
+                    "config": {
+                      "id": "equal",
+                      "options": {
+                        "value": "/"
+                      }
+                    },
+                    "fieldName": "Mount Point"
+                  }
+                ],
+                "match": "any",
+                "type": "include"
+              }
+            }
+          ],
+          "type": "stat"
+        }
+      ],
+      "title": "System",
+      "type": "row"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 3
+      },
+      "id": 15,
+      "panels": [
+        {
+          "datasource": {
+            "type": "marcusolsson-json-datasource",
+            "uid": "deqf55uyoxjb4d"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "custom": {
+                "align": "auto",
+                "cellOptions": {
+                  "applyToRow": false,
+                  "mode": "gradient",
+                  "type": "color-background",
+                  "wrapText": false
+                },
+                "filterable": true,
+                "inspect": false
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "dark-blue",
+                    "value": null
+                  }
+                ]
+              }
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Signals"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 184
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Open files"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 121
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 16,
+            "w": 24,
+            "x": 0,
+            "y": 14
+          },
+          "id": 18,
+          "options": {
+            "cellHeight": "lg",
+            "footer": {
+              "countRows": false,
+              "enablePagination": false,
+              "fields": "",
+              "reducer": [
+                "sum"
+              ],
+              "show": true
+            },
+            "showHeader": true,
+            "sortBy": [
+              {
+                "desc": true,
+                "displayName": "% CPU"
+              }
+            ]
+          },
+          "pluginVersion": "11.5.2",
+          "targets": [
+            {
+              "body": "",
+              "cacheDurationSeconds": 5,
+              "datasource": {
+                "type": "marcusolsson-json-datasource",
+                "uid": "ceqfbf2oorfnkc"
+              },
+              "fields": [
+                {
+                  "jsonPath": "$[\"processes\"][*].pid",
+                  "language": "jsonpath",
+                  "name": ""
+                },
+                {
+                  "jsonPath": "$[\"processes\"][*].name",
+                  "language": "jsonpath",
+                  "name": ""
+                },
+                {
+                  "jsonPath": "$[\"processes\"][*].user",
+                  "language": "jsonpath",
+                  "name": ""
+                },
+                {
+                  "jsonPath": "$[\"processes\"][*].threads",
+                  "language": "jsonpath",
+                  "name": ""
+                },
+                {
+                  "jsonPath": "$[\"processes\"][*].cpu_percent",
+                  "language": "jsonpath",
+                  "name": "% CPU",
+                  "type": "number"
+                },
+                {
+                  "jsonPath": "$[\"processes\"][*].mem_rss_mb",
+                  "language": "jsonpath",
+                  "name": "RAM MB",
+                  "type": "number"
+                },
+                {
+                  "jsonPath": "$[\"processes\"][*].args",
+                  "language": "jsonpath",
+                  "name": ""
+                },
+                {
+                  "jsonPath": "$[\"processes\"][*].open_files",
+                  "language": "jsonpath",
+                  "name": "Open files"
+                },
+                {
+                  "jsonPath": "$[\"processes\"][*].pipe_count",
+                  "language": "jsonpath",
+                  "name": "Pipe"
+                },
+                {
+                  "jsonPath": "$[\"processes\"][*].signals",
+                  "language": "jsonpath",
+                  "name": "Signals"
+                },
+                {
+                  "jsonPath": "$[\"processes\"][*].sockets",
+                  "language": "jsonpath",
+                  "name": ""
+                }
+              ],
+              "method": "GET",
+              "queryParams": "",
+              "refId": "A",
+              "urlPath": ""
+            }
+          ],
+          "title": "Processes",
+          "transformations": [
+            {
+              "id": "extractFields",
+              "options": {
+                "delimiter": ",",
+                "format": "json"
+              }
+            }
+          ],
+          "type": "table"
+        }
+      ],
+      "title": "Process Monitor",
+      "type": "row"
+    }
+  ],
+  "preload": false,
+  "refresh": "auto",
+  "schemaVersion": 40,
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "current": {
+          "text": "/home/katana/os-dashboard",
+          "value": "/home/katana/os-dashboard"
+        },
+        "description": "",
+        "label": "File Search",
+        "name": "filesearch",
+        "options": [
+          {
+            "selected": true,
+            "text": "/home/katana/os-dashboard",
+            "value": "/home/katana/os-dashboard"
+          }
+        ],
+        "query": "/home/katana/os-dashboard",
+        "type": "textbox"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-5m",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "browser",
+  "title": "OS-Dashboard",
+  "uid": "bemynhz7w6fi8a",
+  "version": 50,
+  "weekStart": ""
+}

@@ -8,16 +8,18 @@ Responsavel por coletar e calcular informacoes detalhadas sobre todos os process
 no sistema operacional Linux, utilizando os arquivos em /proc.
 
 Fontes de dados utilizadas:
-    - /proc/[pid]/status: Nome do processo, UID, numero de threads, uso de memoria (VmRSS)
+    - /proc/[pid]/status: Nome do processo, UID, numero de threads, uso de memoria (VmRSS), sinais (SigBlk, SigIgn, SigCgt)
     - /proc/[pid]/cmdline: Argumentos de execucao do processo
     - /proc/[pid]/stat: Tempo de CPU (user + system)
-    - /proc/[pid]/fd: Lista de arquivos abertos pelo processo
+    - /proc/[pid]/fd: Lista de arquivos abertos e contagem de pipes
+    - /proc/[pid]/net/: Quantidade de sockets TCP, UDP e UNIX
     - /proc/stat: Tempo total de CPU do sistema
 
 Implementacao:
     - Utiliza multithreading com semaforo (`threading.Semaphore`) para limitar concorrencia e acelerar coleta paralela
     - Mede o uso de CPU com base em um intervalo de tempo (`delay`) entre leituras
-    - conversao de UID para nome de usuario via modulo `pwd`
+    - Conversao de UID para nome de usuario via modulo `pwd`
+    - Coleta de arquivos abertos, argumentos, uso de memoria, quantidade de pipes, sinais ativos e sockets por processo
 """
 
 import os
@@ -48,6 +50,9 @@ class ProcessInfo:
                     "mem_rss_mb": round(p.get("mem_rss_mb", 0), 2),
                     "args": p["args"],
                     "open_files": p.get("open_files", []),
+                    "pipe_count": p.get("pipe_count", 0),
+                    "signals": p.get("signals", {}),
+                    "sockets": p.get("sockets", {}),
                 }
                 for p in self.processes
             ]
@@ -119,6 +124,9 @@ class ProcessInfo:
             mem_kb = info.get("mem", {}).get("rss", 0)
             info["mem_rss_mb"] = mem_kb / 1024
             info["open_files"] = self._get_open_files(pid)
+            info["pipe_count"] = self._get_pipe_count(pid)
+            info["signals"] = self._get_signal_masks(pid)
+            info["sockets"] = self._get_sockets(pid)
             return info
         except:
             return None
@@ -184,3 +192,46 @@ class ProcessInfo:
         except Exception:
             pass
         return open_files
+
+    def _get_pipe_count(self, pid):
+        fd_path = f"{self.proc}/{pid}/fd"
+        count = 0
+        try:
+            for fd in os.listdir(fd_path):
+                try:
+                    target = os.readlink(f"{fd_path}/{fd}")
+                    if "pipe:" in target:
+                        count += 1
+                except:
+                    continue
+        except:
+            pass
+        return count
+
+    def _get_signal_masks(self, pid):
+        result = {}
+        try:
+            with open(f"{self.proc}/{pid}/status") as f:
+                for line in f:
+                    if line.startswith("SigBlk:"):
+                        result["SigBlk"] = line.split()[1]
+                    elif line.startswith("SigIgn:"):
+                        result["SigIgn"] = line.split()[1]
+                    elif line.startswith("SigCgt:"):
+                        result["SigCgt"] = line.split()[1]
+        except:
+            pass
+        return result
+
+    def _get_sockets(self, pid):
+        sockets = {}
+        base_path = f"{self.proc}/{pid}/net"
+        for proto in ["tcp", "udp", "unix"]:
+            path = os.path.join(base_path, proto)
+            try:
+                with open(path) as f:
+                    lines = f.readlines()
+                    sockets[proto] = len(lines) - 1
+            except:
+                sockets[proto] = 0
+        return sockets

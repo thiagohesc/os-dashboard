@@ -10,7 +10,6 @@ services:
     restart: always
     environment:
       - GF_SECURITY_ADMIN_PASSWORD=${PASSWORD}
-      - GF_PLUGINS_PREINSTALL=alexanderzobnin-zabbix-app
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.grafana.rule=Host(`${GRAFANA_DOMAIN}`)"
