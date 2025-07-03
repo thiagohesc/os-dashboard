@@ -46,7 +46,7 @@ O objetivo do projeto é aplicar conceitos fundamentais de sistemas operacionais
 
 3. Execute com Docker Compose:
    ```bash
-   docker-compose up -d
+   docker compose up -d
    ```
 
 4. Acesse:
