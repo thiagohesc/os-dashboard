@@ -10,6 +10,7 @@ services:
     restart: always
     environment:
       - GF_SECURITY_ADMIN_PASSWORD=${PASSWORD}
+      - GF_INSTALL_PLUGINS=grafana-simple-json-datasource
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.grafana.rule=Host(`${GRAFANA_DOMAIN}`)"
